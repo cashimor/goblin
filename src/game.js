@@ -1,0 +1,37 @@
+import {scenarios,unitTypes} from './scenarios.js';
+export const TILE=64;
+export const DIRECTIONS=[[1,0],[-1,0],[0,1],[0,-1]];
+const key=(x,y)=>`${x},${y}`;
+const distance=(a,b)=>Math.abs(a.x-b.x)+Math.abs(a.y-b.y);
+const alive=u=>u.hp>0;
+export const living=(game,team)=>game.units.filter(u=>alive(u)&&(!team||u.team===team));
+export const selected=game=>game.units.find(u=>u.id===game.selectedId&&alive(u));
+export const scenario=game=>scenarios[game.scenarioId];
+export function createGame(seed=19,scenarioId='greenwood'){
+  const map=scenarios[scenarioId];if(!map)throw Error('Unknown scenario');
+  let value=seed>>>0;const random=()=>((value=(1664525*value+1013904223)>>>0)/4294967296);
+  const terrain=Array.from({length:map.height},(_,y)=>Array.from({length:map.width},(_,x)=>map.clearings.some(c=>Math.abs(x-c.x)<=c.radius&&Math.abs(y-c.y)<=c.radius)?'plain':random()<map.treeChance?'tree':'plain'));
+  const units=map.units.map(spec=>{const type=unitTypes[spec.type];terrain[spec.y][spec.x]='plain';return {...spec,team:type.team,hp:type.maxHp,mp:type.maxMp,movesLeft:type.move,acted:false,charmedRound:0}});
+  return {version:2,scenarioId,seed,terrain,units,selectedId:units[0].id,turn:'player',round:1,activePower:null,result:null,log:['The battle begins.']};
+}
+export function reachable(game,unit=selected(game),limit=unit?.movesLeft??0){
+  const result=new Map();if(!unit||!alive(unit))return result;
+  const map=scenario(game),queue=[[unit.x,unit.y]];result.set(key(unit.x,unit.y),0);
+  for(let i=0;i<queue.length;i++){const [x,y]=queue[i],cost=result.get(key(x,y));if(cost>=limit)continue;
+    for(const [dx,dy] of DIRECTIONS){const nx=x+dx,ny=y+dy,k=key(nx,ny);if(nx<0||ny<0||nx>=map.width||ny>=map.height||game.terrain[ny][nx]==='tree'||result.has(k)||living(game).some(u=>u.id!==unit.id&&u.x===nx&&u.y===ny))continue;result.set(k,cost+1);queue.push([nx,ny]);}}
+  return result;
+}
+export function selectUnit(game,id){const unit=game.units.find(u=>u.id===id&&alive(u));if(!unit)return false;game.selectedId=id;return true;}
+export function moveUnit(game,x,y,id=game.selectedId){const unit=game.units.find(u=>u.id===id&&alive(u));if(!unit||game.result||game.turn!==unit.team||unit.charmedRound===game.round)return false;const cost=reachable(game,unit).get(key(x,y));if(!cost)return false;unit.x=x;unit.y=y;unit.movesLeft-=cost;return true;}
+function roll(game,min,max){let v=(game.seed=(1664525*game.seed+1013904223)>>>0);return min+v%(max-min+1);}
+function log(game,message){game.log.unshift(message);game.log=game.log.slice(0,8);}
+function outcome(game){const players=living(game,'player'),objective=scenario(game).objective;if(!living(game,objective.eliminateTeam).length)game.result='victory';else if(!players.some(u=>u.type===objective.protectType))game.result='defeat';else if(players.length===1&&players[0].type===objective.specialLastType)game.result='last-mother';if(game.result)log(game,game.result==='victory'?'The humans have fallen. Victory!':game.result==='defeat'?'The broodmother has fallen. Defeat.':'Only the broodmother remains.');}
+function hit(game,attacker,target){const type=unitTypes[attacker.type],base=roll(game,...type.damage),power=game.activePower,map=scenario(game),owner=game.units.find(u=>u.type===map.powerOwnerType&&alive(u));let modifier=0;if(owner&&power?.kind==='enhance'&&attacker.team===owner.team&&distance(owner,attacker)<=map.powers.enhance.range)modifier+=map.powers.enhance.bonus;if(owner&&power?.kind==='weaken'&&attacker.team!==owner.team&&distance(owner,attacker)<=map.powers.weaken.range)modifier-=map.powers.weaken.penalty;const damage=Math.max(0,base+modifier);target.hp=Math.max(0,target.hp-damage);log(game,`${unitTypes[attacker.type].name} hits ${unitTypes[target.type].name} for ${damage}.`);outcome(game);return damage;}
+export function attack(game,targetId,attackerId=game.selectedId){const a=game.units.find(u=>u.id===attackerId&&alive(u)),t=game.units.find(u=>u.id===targetId&&alive(u));if(!a||!t||game.result||game.turn!==a.team||a.team===t.team||a.acted||a.charmedRound===game.round||distance(a,t)!==1)return false;
+  a.acted=true;if(a.type===scenario(game).powerOwnerType){game.activePower={kind:'charm',targetId:t.id};t.charmedRound=game.round;log(game,`${unitTypes[a.type].name} charms ${unitTypes[t.type].name}.`);}else hit(game,a,t);return true;}
+export function castPower(game,kind){const owner=game.units.find(u=>u.type===scenario(game).powerOwnerType&&alive(u));const power=scenario(game).powers[kind];if(!owner||!power||kind==='charm'||game.turn!==owner.team||game.result||owner.acted||owner.mp<power.cost)return false;owner.mp-=power.cost;owner.acted=true;game.activePower={kind};log(game,`${unitTypes[owner.type].name} casts ${power.name}.`);return true;}
+export function endTurn(game){if(game.turn!=='player'||game.result)return false;game.turn='enemy';log(game,'The humans advance.');return true;}
+function pathTo(game,unit,target){const map=scenario(game),queue=[[unit.x,unit.y]],parents=new Map([[key(unit.x,unit.y),null]]),blocked=new Set(living(game).filter(u=>u.id!==unit.id).map(u=>key(u.x,u.y)));let goal=null;for(let i=0;i<queue.length;i++){const [x,y]=queue[i],here=key(x,y);if(Math.abs(x-target.x)+Math.abs(y-target.y)===1){goal=here;break;}for(const [dx,dy] of DIRECTIONS){const nx=x+dx,ny=y+dy,next=key(nx,ny);if(nx<0||ny<0||nx>=map.width||ny>=map.height||game.terrain[ny][nx]==='tree'||blocked.has(next)||parents.has(next))continue;parents.set(next,here);queue.push([nx,ny]);}}if(!goal)return null;const route=[];for(let at=goal;parents.get(at)!==null;at=parents.get(at))route.unshift(at.split(',').map(Number));return route;}
+function enemyStep(game,enemy){const preferred=scenario(game).ai.preferTargetType,nearby=()=>living(game,'player').filter(u=>distance(enemy,u)===1).sort((a,b)=>(b.type===preferred)-(a.type===preferred)||a.hp-b.hp);if(nearby().length){attack(game,nearby()[0].id,enemy.id);return;}const targets=living(game,'player').sort((a,b)=>(b.type===preferred)-(a.type===preferred)||distance(enemy,a)-distance(enemy,b));for(const target of targets){const path=pathTo(game,enemy,target);if(!path)continue;const step=path[Math.min(path.length,enemy.movesLeft)-1];if(step)moveUnit(game,step[0],step[1],enemy.id);break;}const adjacent=nearby();if(adjacent.length)attack(game,adjacent[0].id,enemy.id);}
+export function finishEnemyTurn(game){if(game.turn!=='enemy'||game.result)return false;for(const enemy of living(game,'enemy')){if(enemy.charmedRound===game.round){log(game,'A charmed human loses its turn.');continue;}enemyStep(game,enemy);if(game.result)break;}if(game.activePower?.kind==='charm')game.activePower=null;if(!game.result){game.turn='player';game.round++;for(const unit of living(game)){unit.movesLeft=unitTypes[unit.type].move;unit.acted=false;}const current=selected(game);if(!current||current.team!=='player')game.selectedId=living(game,'player')[0]?.id;log(game,`Round ${game.round} begins.`);}return true;}
+export function validGame(game){const map=scenarios[game?.scenarioId];return !!(map&&game.version===2&&game.terrain?.length===map.height&&game.terrain.every(row=>row.length===map.width&&row.every(t=>t==='plain'||t==='tree'))&&Array.isArray(game.units)&&game.units.every(u=>unitTypes[u.type]&&Number.isInteger(u.x)&&Number.isInteger(u.y)&&u.x>=0&&u.y>=0&&u.x<map.width&&u.y<map.height&&Number.isInteger(u.hp)&&u.hp>=0&&u.hp<=unitTypes[u.type].maxHp)&&['player','enemy'].includes(game.turn)&&Number.isInteger(game.round));}
