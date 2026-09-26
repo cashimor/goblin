@@ -1,6 +1,6 @@
 # Battlemap
 
-A browser based tactical game prototype. The Greenwood scenario has a 25 × 25 tile map, ten goblins, one broodmother, and three human soldiers.
+A browser based tactical game prototype. The Greenwood scenario has a 25 × 25 tile map, ten goblins, one broodmother, and four human soldiers.
 
 ## Run
 
@@ -12,7 +12,9 @@ Run the rules tests with `node --test`.
 
 ## Controls
 
-Select a party member on the map or in the sidebar. Click a blue square to move, or use the arrow keys / WASD. Click an adjacent human to attack. The broodmother can instead cast Battle Chant or Withering Curse; her adjacent attack charms a human for one enemy turn. Only one broodmother power can be active at a time. Drag the map to pan and scroll to zoom. End turn to let the humans move and attack. Save and Load use this browser's local storage.
+Select a party member on the map or in the sidebar. Click a blue square to move, or use the arrow keys / WASD. Click an adjacent human to attack. The broodmother can instead cast Battle Chant or Withering Curse; her adjacent attack charms a charmable human for one enemy turn. Charmable humans have a blue marker. A charmed human attacks an adjacent uncharmable ally, who attempts to retaliate during the following human turn. Only one broodmother power can be active at a time. Drag the map to pan and scroll to zoom. End turn to let the humans move and attack. Save and Load use this browser's local storage.
+
+The broodmother earns one charm point the first time she charms each enemy. When the battle ends, each point can be exchanged for one fresh goblin. This scenario contains two charmable humans, so two points are available.
 
 Defeat all humans to win. If the broodmother dies, you lose. If she is the last surviving party member, the special ending triggers.
 
