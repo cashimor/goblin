@@ -18,6 +18,10 @@ The broodmother earns one charm point the first time she charms each enemy. When
 
 The opening screen lets you start over or load the latest browser save. You can save or load during play from the top bar. Reaching any battle ending creates an automatic save, and exchanging a charm point saves the new recruit immediately. Saves stay in the current browser profile.
 
+Each battle opens with a story introduction. After defeating the humans, exchange any desired charm points, then choose **Continue to the rival tribe**. Surviving goblins are healed and promoted to veterans (10 HP, 1–3 club damage), recruited goblins join as basic goblins, and the broodmother restores her HP and MP. Unspent charm points carry over.
+
+The second tribe has two uncharmable shamans (16 HP, 16 MP, 3–5 damage spirit bolts with a three tile range at 2 MP per attack), a charmable champion (36 HP, 4–6 damage), and four charmable basic goblins. Victory comes from eliminating the rival army or leaving only the broodmother and a currently charmed champion alive. Losing the broodmother is defeat.
+
 Defeat all humans to win. If the broodmother dies, you lose. If she is the last surviving party member, the special ending triggers.
 
 ## Structure
