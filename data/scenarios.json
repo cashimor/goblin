@@ -146,7 +146,8 @@
       }
     },
     "onResult": {
-      "captured": "city-hub"
+      "captured": "city-hub",
+      "last-mother": "city-hub"
     }
   },
   "tribal-merger": {

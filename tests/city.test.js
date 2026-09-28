@@ -9,6 +9,24 @@ test('human capture leads to Luna and Rekham rescuing the broodmother in the cit
   const old=createGame();old.result='defeat';old.units[0].hp=0;assert.equal(upgradeLegacyCapture(old),true);assert.equal(old.result,'captured');
 });
 
+test('broodmother alone after Greenwood goes to the city without recruiting',()=>{
+  const forest=createGame();for(const unit of forest.units)if(unit.type!=='broodmother')unit.hp=0;
+  forest.charmPoints=4;assert.equal(checkOutcome(forest),'last-mother');assert.equal(exchangeCharmPoint(forest),false);
+  const city=nextBattle(forest);assert.equal(city.scenarioId,'city-hub');assert.equal(city.charmPoints,4);
+  assert.equal(city.freshGoblins,0);assert.deepEqual(living(city,'player').map(u=>u.type),['broodmother','luna','rekham']);
+});
+
+test('old saved Greenwood endings refund recruits and unlock the city route',()=>{
+  for(const result of ['victory','last-mother']){
+    const saved=createGame();for(const unit of saved.units)if(unit.type==='goblin')unit.hp=0;
+    saved.result=result;saved.charmPoints=1;saved.freshGoblins=2;
+    assert.equal(upgradeLegacyCapture(saved),true);assert.equal(saved.result,'last-mother');
+    assert.equal(saved.charmPoints,3);assert.equal(saved.freshGoblins,0);
+    assert.equal(exchangeCharmPoint(saved),false);assert.equal(nextBattle(saved).scenarioId,'city-hub');
+    assert.equal(upgradeLegacyCapture(saved),false);
+  }
+});
+
 test('guild board opens each mission and successful jobs are recorded on return',()=>{
   const hub=createGame(19,'city-hub');for(const id of ['merchant-defense','herb-gathering','sewer-rats'])assert.equal(startMission(hub,id).scenarioId,id);
   assert.equal(startMission(hub,'not-a-job'),null);const job=startMission(hub,'sewer-rats');for(const rat of living(job,'enemy'))rat.hp=0;assert.equal(checkOutcome(job),'victory');const returned=returnToGuild(job);assert.equal(returned.scenarioId,'city-hub');assert.deepEqual(returned.completedMissions,['sewer-rats']);assert.ok(validGame(returned));

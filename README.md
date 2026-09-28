@@ -28,7 +28,7 @@ If the humans reduce the broodmother to zero HP in the first battle, they captur
 
 Luna has 30 HP and 4–6 base damage. Rekham has 30 HP and deals 1–4 damage; while he is alive, Luna deals two extra damage. Luna can spend her action to become invisible. Enemies cannot target her while invisible. Her next attack reveals her and stuns its target for that enemy turn.
 
-In the Greenwood, defeating all humans sends the surviving goblins onward to the rival tribe. Capture sends the broodmother to the city branch. If she is the last surviving party member while fighting the humans, the special ending triggers.
+In the Greenwood, defeating all humans with goblin survivors sends the party onward to the rival tribe. If the broodmother dies or is the only party member left, the city branch opens. The broodmother cannot exchange charm points at either city ending; her saved points carry into the city. Older saved endings with only the broodmother are corrected when loaded, and any goblins recruited at that ending are refunded as charm points.
 
 ## Structure
 
