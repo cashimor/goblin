@@ -11,7 +11,8 @@
     "objective": {
       "eliminateTeam": "enemy",
       "protectType": "broodmother",
-      "specialLastType": "broodmother"
+      "specialLastType": "broodmother",
+      "captureOnLoss": true
     },
     "ai": {
       "preferTargetType": "goblin"
@@ -143,6 +144,9 @@
         "cost": 5,
         "penalty": 2
       }
+    },
+    "onResult": {
+      "captured": "city-hub"
     }
   },
   "tribal-merger": {
@@ -313,6 +317,357 @@
       },
       {
         "x": 7,
+        "y": 13
+      }
+    ]
+  },
+  "city-hub": {
+    "width": 18,
+    "height": 18,
+    "treeChance": 0,
+    "clearings": [
+      {
+        "x": 9,
+        "y": 9,
+        "radius": 8
+      }
+    ],
+    "powerOwnerType": "broodmother",
+    "powers": {
+      "charm": {
+        "name": "Charm touch",
+        "range": 1,
+        "cost": 0
+      },
+      "enhance": {
+        "name": "Battle chant",
+        "range": 3,
+        "cost": 5,
+        "bonus": 2
+      },
+      "weaken": {
+        "name": "Withering curse",
+        "range": 3,
+        "cost": 5,
+        "penalty": 2
+      }
+    },
+    "allowRecruitment": false,
+    "id": "city-hub",
+    "name": "The Guild Hall",
+    "description": "Luna and Rekham have brought the broodmother to safety. Choose a job from the guild board.",
+    "story": "The humans take the broodmother captive and march her into the city. Before they can execute her, Luna, a catkin rogue, slips through the guards unseen. Rekham, a human ally, opens the way out. They hide the broodmother at the guild hall. Here she cannot raise new goblins, but the three of them can earn a living together by taking jobs from the guild board.",
+    "objective": {
+      "kind": "hub"
+    },
+    "ai": {
+      "preferTargetType": "luna"
+    },
+    "units": [
+      {
+        "id": "mother",
+        "type": "broodmother",
+        "x": 4,
+        "y": 9
+      },
+      {
+        "id": "luna",
+        "type": "luna",
+        "x": 5,
+        "y": 8
+      },
+      {
+        "id": "rekham",
+        "type": "rekham",
+        "x": 5,
+        "y": 10
+      }
+    ],
+    "missionBoard": [
+      "merchant-defense",
+      "herb-gathering",
+      "sewer-rats"
+    ]
+  },
+  "merchant-defense": {
+    "width": 18,
+    "height": 18,
+    "treeChance": 0,
+    "clearings": [
+      {
+        "x": 9,
+        "y": 9,
+        "radius": 8
+      }
+    ],
+    "powerOwnerType": "broodmother",
+    "powers": {
+      "charm": {
+        "name": "Charm touch",
+        "range": 1,
+        "cost": 0
+      },
+      "enhance": {
+        "name": "Battle chant",
+        "range": 3,
+        "cost": 5,
+        "bonus": 2
+      },
+      "weaken": {
+        "name": "Withering curse",
+        "range": 3,
+        "cost": 5,
+        "penalty": 2
+      }
+    },
+    "allowRecruitment": false,
+    "id": "merchant-defense",
+    "name": "Guard the Caravan",
+    "description": "Protect the merchant and defeat the bandits.",
+    "story": "A merchant caravan needs an escort through a narrow road outside the city. Bandits are waiting ahead. Keep the merchant alive and drive the attackers away.",
+    "objective": {
+      "kind": "eliminate",
+      "eliminateTeam": "enemy",
+      "protectTypes": [
+        "broodmother",
+        "merchant"
+      ]
+    },
+    "ai": {
+      "preferTargetType": "merchant"
+    },
+    "units": [
+      {
+        "id": "mother",
+        "type": "broodmother",
+        "x": 4,
+        "y": 9
+      },
+      {
+        "id": "luna",
+        "type": "luna",
+        "x": 5,
+        "y": 8
+      },
+      {
+        "id": "rekham",
+        "type": "rekham",
+        "x": 5,
+        "y": 10
+      },
+      {
+        "id": "merchant",
+        "type": "merchant",
+        "x": 7,
+        "y": 9,
+        "controllable": false
+      },
+      {
+        "id": "bandit-1",
+        "type": "bandit",
+        "x": 13,
+        "y": 7
+      },
+      {
+        "id": "bandit-2",
+        "type": "bandit",
+        "x": 14,
+        "y": 9
+      },
+      {
+        "id": "bandit-3",
+        "type": "bandit",
+        "x": 13,
+        "y": 11
+      }
+    ]
+  },
+  "herb-gathering": {
+    "width": 18,
+    "height": 18,
+    "treeChance": 0,
+    "clearings": [
+      {
+        "x": 9,
+        "y": 9,
+        "radius": 8
+      }
+    ],
+    "powerOwnerType": "broodmother",
+    "powers": {
+      "charm": {
+        "name": "Charm touch",
+        "range": 1,
+        "cost": 0
+      },
+      "enhance": {
+        "name": "Battle chant",
+        "range": 3,
+        "cost": 5,
+        "bonus": 2
+      },
+      "weaken": {
+        "name": "Withering curse",
+        "range": 3,
+        "cost": 5,
+        "penalty": 2
+      }
+    },
+    "allowRecruitment": false,
+    "id": "herb-gathering",
+    "name": "Gather Healing Herbs",
+    "description": "Collect three herb patches before leaving the grove.",
+    "story": "The guild healer has run short of silverleaf. Search the city grove for three patches while avoiding the creatures that nest there.",
+    "objective": {
+      "kind": "collect",
+      "required": 3,
+      "protectTypes": [
+        "broodmother"
+      ]
+    },
+    "ai": {
+      "preferTargetType": "luna"
+    },
+    "herbs": [
+      {
+        "x": 9,
+        "y": 5
+      },
+      {
+        "x": 12,
+        "y": 9
+      },
+      {
+        "x": 9,
+        "y": 13
+      }
+    ],
+    "units": [
+      {
+        "id": "mother",
+        "type": "broodmother",
+        "x": 4,
+        "y": 9
+      },
+      {
+        "id": "luna",
+        "type": "luna",
+        "x": 5,
+        "y": 8
+      },
+      {
+        "id": "rekham",
+        "type": "rekham",
+        "x": 5,
+        "y": 10
+      },
+      {
+        "id": "rat-herb-1",
+        "type": "rat",
+        "x": 11,
+        "y": 6
+      },
+      {
+        "id": "rat-herb-2",
+        "type": "rat",
+        "x": 12,
+        "y": 12
+      }
+    ]
+  },
+  "sewer-rats": {
+    "width": 18,
+    "height": 18,
+    "treeChance": 0,
+    "clearings": [
+      {
+        "x": 9,
+        "y": 9,
+        "radius": 8
+      }
+    ],
+    "powerOwnerType": "broodmother",
+    "powers": {
+      "charm": {
+        "name": "Charm touch",
+        "range": 1,
+        "cost": 0
+      },
+      "enhance": {
+        "name": "Battle chant",
+        "range": 3,
+        "cost": 5,
+        "bonus": 2
+      },
+      "weaken": {
+        "name": "Withering curse",
+        "range": 3,
+        "cost": 5,
+        "penalty": 2
+      }
+    },
+    "allowRecruitment": false,
+    "id": "sewer-rats",
+    "name": "Rats in the Sewers",
+    "description": "Clear the sewer tunnels of rats.",
+    "story": "The guild board offers a modest bounty for clearing the rats beneath the city. The tunnels are cramped, but every rat dealt with makes the streets safer.",
+    "objective": {
+      "kind": "eliminate",
+      "eliminateTeam": "enemy",
+      "protectTypes": [
+        "broodmother"
+      ]
+    },
+    "ai": {
+      "preferTargetType": "rekham"
+    },
+    "units": [
+      {
+        "id": "mother",
+        "type": "broodmother",
+        "x": 4,
+        "y": 9
+      },
+      {
+        "id": "luna",
+        "type": "luna",
+        "x": 5,
+        "y": 8
+      },
+      {
+        "id": "rekham",
+        "type": "rekham",
+        "x": 5,
+        "y": 10
+      },
+      {
+        "id": "sewer-rat-1",
+        "type": "rat",
+        "x": 11,
+        "y": 5
+      },
+      {
+        "id": "sewer-rat-2",
+        "type": "rat",
+        "x": 13,
+        "y": 7
+      },
+      {
+        "id": "sewer-rat-3",
+        "type": "rat",
+        "x": 12,
+        "y": 9
+      },
+      {
+        "id": "sewer-rat-4",
+        "type": "rat",
+        "x": 13,
+        "y": 11
+      },
+      {
+        "id": "sewer-rat-5",
+        "type": "rat",
+        "x": 11,
         "y": 13
       }
     ]

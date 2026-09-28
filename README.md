@@ -24,7 +24,11 @@ Each battle opens with a story introduction. After defeating the humans, exchang
 
 The second tribe has two uncharmable shamans (16 HP, 16 MP, 3–5 damage spirit bolts with a three tile range at 2 MP per attack), a charmable champion (36 HP, 4–6 damage), and four charmable basic goblins. Victory comes from eliminating the rival army or leaving only the broodmother and a currently charmed champion alive. Losing the broodmother is defeat.
 
-Defeat all humans to win. If the broodmother dies, you lose. If she is the last surviving party member, the special ending triggers.
+If the humans reduce the broodmother to zero HP in the first battle, they capture her. Luna and Rekham rescue her and bring her to the city guild hall. The three can then choose **Guard the Caravan** (defeat bandits while keeping the merchant alive), **Gather Healing Herbs** (reach three herb patches), or **Rats in the Sewers** (defeat the rats). Completed jobs are marked on the guild board. Mission results and progress are saved as usual. The party rests and heals at the guild between jobs. The broodmother cannot recruit goblins in the city.
+
+Luna has 30 HP and 4–6 base damage. Rekham has 30 HP and deals 1–4 damage; while he is alive, Luna deals two extra damage. Luna can spend her action to become invisible. Enemies cannot target her while invisible. Her next attack reveals her and stuns its target for that enemy turn.
+
+In the Greenwood, defeating all humans sends the surviving goblins onward to the rival tribe. Capture sends the broodmother to the city branch. If she is the last surviving party member while fighting the humans, the special ending triggers.
 
 ## Structure
 

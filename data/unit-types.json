@@ -78,5 +78,70 @@
     ],
     "attack": "War club",
     "charmReward": 2
+  },
+  "luna": {
+    "name": "Luna",
+    "team": "player",
+    "maxHp": 30,
+    "maxMp": 0,
+    "move": 6,
+    "damage": [
+      4,
+      6
+    ],
+    "attack": "Rogue blade",
+    "charmReward": 2
+  },
+  "rekham": {
+    "name": "Rekham",
+    "team": "player",
+    "maxHp": 30,
+    "maxMp": 0,
+    "move": 6,
+    "damage": [
+      1,
+      4
+    ],
+    "attack": "Sword",
+    "charmReward": 2
+  },
+  "merchant": {
+    "name": "Merchant",
+    "team": "player",
+    "maxHp": 18,
+    "maxMp": 0,
+    "move": 0,
+    "damage": [
+      0,
+      0
+    ],
+    "attack": "None",
+    "charmReward": 2
+  },
+  "bandit": {
+    "name": "Bandit",
+    "team": "enemy",
+    "maxHp": 14,
+    "maxMp": 0,
+    "move": 5,
+    "damage": [
+      2,
+      4
+    ],
+    "attack": "Dagger",
+    "charmReward": 2
+  },
+  "rat": {
+    "name": "Sewer Rat",
+    "team": "enemy",
+    "maxHp": 5,
+    "maxMp": 0,
+    "move": 4,
+    "damage": [
+      1,
+      2
+    ],
+    "attack": "Bite",
+    "charmReward": 1
   }
 }

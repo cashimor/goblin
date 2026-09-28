@@ -8,3 +8,5 @@
 .undo-move{margin-top:12px;width:100%;display:flex;justify-content:space-between;background:#2b3d35;color:#d8e6d5;border:1px solid #68816b;border-radius:5px;padding:11px 14px;font-weight:700}.undo-move span{font-size:10px;font-weight:500;color:#a8bdac}.undo-move:hover:not(:disabled){background:#395442}.undo-move:disabled{opacity:.42;cursor:default}
 
 .party-unit.active{background:#556a3e;border:2px solid #fff2af;color:#fff9da;box-shadow:inset 4px 0 #ffe8a0,0 0 0 1px #ffe8a055;font-weight:700}
+
+.guild-board{margin:16px 0;padding:14px;background:#24392f;border:1px solid #6d876a;border-radius:5px}.guild-board p{font-size:11px;color:#b6c8b4;line-height:1.5}.guild-board button,.ability-button{display:block;width:100%;margin:7px 0;padding:10px;background:#354f41;color:#e8f5e1;border:1px solid #7caa89;border-radius:4px;text-align:left;font:600 11px DM Sans,sans-serif}.ability-button{margin-top:12px;background:#284759;border-color:#78b9db}.ability-button:disabled{opacity:.45}.guild-board button:hover,.ability-button:hover:not(:disabled){filter:brightness(1.2)}

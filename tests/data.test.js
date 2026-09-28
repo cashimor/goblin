@@ -7,6 +7,8 @@ test('JSON level definitions have valid units, links, and deployment positions',
   for(const [id,map] of Object.entries(scenarios)){
     assert.equal(map.id,id);assert.ok(map.story);assert.ok(map.width>0&&map.height>0);
     if(map.nextScenario)assert.ok(scenarios[map.nextScenario]);
+    for(const id of map.missionBoard??[])assert.ok(scenarios[id],`${id} is missing from the guild board`);
+    for(const id of Object.values(map.onResult??{}))assert.ok(scenarios[id],`${id} is missing as an outcome destination`);
     const spaces=new Set();
     for(const spec of [...map.units,...(map.partyDeployment??[])]){
       if(spec.type)assert.ok(unitTypes[spec.type]);
