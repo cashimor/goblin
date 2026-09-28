@@ -44,8 +44,36 @@ test('herbs are collected on arrival and the third patch completes the job',()=>
 test('city mission progress and Luna visibility survive a save and load',()=>{
   const job=createGame(19,'herb-gathering'),luna=job.units.find(u=>u.type==='luna');
   assert.equal(turnInvisible(job,luna.id),true);luna.x=8;luna.y=5;assert.equal(moveUnit(job,9,5,luna.id),true);
-  job.completedMissions=['sewer-rats'];const memory=new Map(),store={setItem:(k,v)=>memory.set(k,v),getItem:k=>memory.get(k)??null};
+  job.completedMissions=['sewer-rats'];job.charmPoints=5;job.charmedIds=['merchant-defense:1:bandit-1'];job.missionNumber=2;
+  const memory=new Map(),store={setItem:(k,v)=>memory.set(k,v),getItem:k=>memory.get(k)??null};
   saveGame(store,job);const loaded=loadGame(store,validGame).game;
   assert.equal(loaded.units.find(u=>u.type==='luna').invisible,true);
   assert.deepEqual(loaded.herbsCollected,['9,5']);assert.deepEqual(loaded.completedMissions,['sewer-rats']);
+  assert.equal(loaded.charmPoints,5);assert.deepEqual(loaded.charmedIds,['merchant-defense:1:bandit-1']);assert.equal(loaded.missionNumber,2);
+});
+
+test('city charms earn points across jobs while recruitment stays locked',()=>{
+  const forest=createGame();forest.charmPoints=2;forest.units[0].hp=0;checkOutcome(forest);
+  const hub=nextBattle(forest);assert.equal(hub.charmPoints,2);
+  const first=startMission(hub,'merchant-defense'),bandit=first.units.find(u=>u.id==='bandit-1'),mother=first.units[0];
+  bandit.x=mother.x+1;bandit.y=mother.y;assert.equal(bandit.charmable,true);assert.equal(attack(first,bandit.id),true);assert.equal(first.charmPoints,4);
+  first.result='victory';assert.equal(exchangeCharmPoint(first),false);
+  const returned=returnToGuild(first);assert.equal(returned.charmPoints,4);
+  const second=startMission(returned,'merchant-defense'),another=second.units.find(u=>u.id==='bandit-1');another.x=second.units[0].x+1;another.y=second.units[0].y;
+  assert.equal(attack(second,another.id),true);assert.equal(second.charmPoints,6);assert.equal(second.charmedIds.length,2);
+  assert.equal(startMission(returned,'sewer-rats').charmPoints,4);
+});
+
+for(const companion of ['luna','rekham'])test(`${companion} death sends the broodmother to the champion battle with saved recruits`,()=>{
+  const job=createGame(19,'sewer-rats');job.charmPoints=3;job.units.find(u=>u.type===companion).hp=0;
+  assert.equal(checkOutcome(job),'retreat');assert.equal(returnToGuild(job),null);
+  assert.equal(exchangeCharmPoint(job),true);assert.equal(job.charmPoints,2);
+  const forest=nextBattle(job);assert.equal(forest.scenarioId,'tribal-merger');assert.equal(forest.charmPoints,2);
+  assert.deepEqual(living(forest,'player').map(u=>u.type),['broodmother','goblin']);
+  assert.ok(forest.storyOverride.includes('retreat'));assert.ok(validGame(forest));
+});
+
+test('broodmother death in the city remains defeat rather than a retreat',()=>{
+  const job=createGame(19,'herb-gathering');job.units.find(u=>u.type==='broodmother').hp=0;job.units.find(u=>u.type==='luna').hp=0;
+  assert.equal(checkOutcome(job),'defeat');assert.equal(nextBattle(job),null);
 });

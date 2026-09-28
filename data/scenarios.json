@@ -157,6 +157,7 @@
     "height": 25,
     "treeChance": 0.12,
     "story": "The human soldiers have fallen, and word of your victory travels through the forest. Another goblin tribe arrives seeking to merge with yours. Their shamans demand proof of strength, and their champion challenges the broodmother’s authority. The survivors of the first battle now stand as veterans. Defeat the rival tribe, or leave only the broodmother and a charmed champion alive to seal the union.",
+    "retreatStory": "Luna or Rekham has fallen, and the city is no longer safe for the broodmother. She retreats alone to the Greenwood, where her saved charm points can finally become a new brood. Another goblin tribe arrives with two shamans and a champion who challenges her authority. Defeat the rival tribe, or leave only the broodmother and a charmed champion alive to seal the union.",
     "objective": {
       "eliminateTeam": "enemy",
       "protectType": "broodmother",
@@ -431,7 +432,14 @@
       "protectTypes": [
         "broodmother",
         "merchant"
+      ],
+      "retreatOnLossTypes": [
+        "luna",
+        "rekham"
       ]
+    },
+    "onResult": {
+      "retreat": "tribal-merger"
     },
     "ai": {
       "preferTargetType": "merchant"
@@ -466,7 +474,8 @@
         "id": "bandit-1",
         "type": "bandit",
         "x": 13,
-        "y": 7
+        "y": 7,
+        "charmable": true
       },
       {
         "id": "bandit-2",
@@ -523,7 +532,14 @@
       "required": 3,
       "protectTypes": [
         "broodmother"
+      ],
+      "retreatOnLossTypes": [
+        "luna",
+        "rekham"
       ]
+    },
+    "onResult": {
+      "retreat": "tribal-merger"
     },
     "ai": {
       "preferTargetType": "luna"
@@ -565,7 +581,8 @@
         "id": "rat-herb-1",
         "type": "rat",
         "x": 11,
-        "y": 6
+        "y": 6,
+        "charmable": true
       },
       {
         "id": "rat-herb-2",
@@ -616,7 +633,14 @@
       "eliminateTeam": "enemy",
       "protectTypes": [
         "broodmother"
+      ],
+      "retreatOnLossTypes": [
+        "luna",
+        "rekham"
       ]
+    },
+    "onResult": {
+      "retreat": "tribal-merger"
     },
     "ai": {
       "preferTargetType": "rekham"
@@ -644,7 +668,8 @@
         "id": "sewer-rat-1",
         "type": "rat",
         "x": 11,
-        "y": 5
+        "y": 5,
+        "charmable": true
       },
       {
         "id": "sewer-rat-2",
