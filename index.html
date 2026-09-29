@@ -12,7 +12,7 @@
       <div class="start-rune">✦</div><div class="eyebrow">A TACTICAL TALE</div><h1>Battlemap</h1>
       <p>Lead the goblin brood through the Greenwood.</p>
       <button id="startNew" class="primary-start">Start over</button>
-      <button id="continueGame">Load game</button>
+      <button id="continueGame">Choose a save to load</button>
       <small id="saveSummary">No saved battle found</small>
     </div>
   </div>
@@ -26,6 +26,10 @@
   <div id="storyScreen" class="start-screen" hidden>
     <div class="start-card story-card"><div class="eyebrow">THE NEXT CHAPTER</div><h1 id="storyTitle"></h1><p id="storyText"></p><button id="beginBattle" class="primary-start">Begin battle</button></div>
   </div>
+  <dialog id="saveDialog" class="save-dialog" aria-labelledby="saveDialogTitle">
+    <div class="save-dialog-header"><div><div class="eyebrow">YOUR CAMPAIGN</div><h2 id="saveDialogTitle">Save game</h2></div><button id="closeSaveDialog" class="save-close" aria-label="Close save slots">✕</button></div>
+    <p id="saveDialogHelp"></p><div id="saveSlotList" class="save-slot-list"></div>
+  </dialog>
   <button id="nextBattle" class="next-battle" hidden>Continue →</button><button id="returnGuild" class="next-battle" hidden>Return to the guild board →</button>
   <script type="module" src="./src/main.js"></script>
 </body>

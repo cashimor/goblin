@@ -12,13 +12,13 @@ Run the rules tests with `node --test`.
 
 ## Controls
 
-Select a party member on the map or in the sidebar. Click a blue square to move, or use the arrow keys / WASD. Click an adjacent human to attack. The broodmother can instead cast Battle Chant or Withering Curse; her adjacent attack charms a charmable human for one enemy turn. Charmable humans have a blue marker. A charmed human attacks an adjacent uncharmable ally, who attempts to retaliate during the following human turn. Only one broodmother power can be active at a time. Drag the map to pan and scroll to zoom. End turn to let the humans move and attack. Save and Load use this browser's local storage.
+Select a party member on the map or in the sidebar. Click a blue square to move, or use the arrow keys / WASD. Click an adjacent enemy to attack. The broodmother can instead cast Battle Chant or Withering Curse; her adjacent attack charms a charmable enemy for one enemy turn. Charmable enemies have a blue marker. Enemy units have a red outline and diamond; opposing goblins stay green, while the champion has a gold crown and C emblem. A charmed enemy attacks an adjacent uncharmable ally, who attempts to retaliate during the following enemy turn. Only one broodmother power can be active at a time. Drag the map to pan and scroll to zoom. End turn to let the enemies move and attack.
 
 Use **Undo move** or Ctrl+Z to reverse the last movement and restore that unit's movement allowance. You can undo several moves in reverse order, including moves by different party members. A successful attack, spell, or End turn commits all earlier movement. Undo history is included in saves.
 
 The broodmother earns one charm point for each uniquely charmed basic goblin or veteran, and two for other unit types, including humans and champions. When the battle ends, each point can be exchanged for one fresh goblin. The first scenario contains two charmable humans, so four points and four recruits are available.
 
-The opening screen lets you start over or load the latest browser save. You can save or load during play from the top bar. Reaching any battle ending creates an automatic save, and exchanging a charm point saves the new recruit immediately. Saves stay in the current browser profile.
+The opening screen lets you start over or choose a save to load. The top bar opens Save and Load menus with three manual slots plus a separate autosave slot. Each slot shows its level, round, and save time. Automatic saves occur when a battle ends, a new chapter begins, and rewards or guild jobs change; using Save writes only to the manual slot you choose. Existing single-slot saves appear in the autosave slot. Saves stay in the current browser profile.
 
 Each battle opens with a story introduction. After defeating the humans, exchange any desired charm points, then choose **Continue to the rival tribe**. Surviving goblins are healed and promoted to veterans (10 HP, 1–3 club damage), recruited goblins join as basic goblins, and the broodmother restores her HP and MP. Unspent charm points carry over.
 
